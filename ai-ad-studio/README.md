@@ -106,3 +106,25 @@ The pipeline is optimized for local speed:
 - FFmpeg composes a short vertical video with text overlays and fades
 
 On a typical dev machine, ad generation usually completes in under 5 minutes.
+
+## Deploy On Render
+
+This repo includes a Render Blueprint: `render.yaml`.
+
+1. Push this project to GitHub.
+2. In Render, click **New +** -> **Blueprint**.
+3. Select your repo and confirm `render.yaml` is detected.
+4. Set secret env vars for the backend service:
+  - `GEMINI_API_KEY` (optional but recommended)
+  - `TTS_API_KEY` (optional)
+  - `DID_API_KEY` (optional)
+5. Deploy.
+
+Services created:
+- `ai-ad-studio-backend` (Node web service)
+- `ai-ad-studio-frontend` (static site)
+
+Production notes:
+- Frontend reads `VITE_API_BASE_URL` (auto-wired to backend URL in `render.yaml`).
+- Backend asset links use `PUBLIC_BASE_URL`; if omitted, backend falls back to `RENDER_EXTERNAL_URL`.
+- FFmpeg/FFprobe default to bundled binaries via `ffmpeg-static` and `ffprobe-static`, so no OS-level install is required on Render.

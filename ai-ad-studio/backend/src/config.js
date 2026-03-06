@@ -1,6 +1,8 @@
 import path from "path";
 import { fileURLToPath } from "url";
 import dotenv from "dotenv";
+import ffmpegStatic from "ffmpeg-static";
+import ffprobeStatic from "ffprobe-static";
 
 dotenv.config();
 
@@ -13,9 +15,12 @@ export const config = {
   geminiApiKey: process.env.GEMINI_API_KEY || "",
   ttsApiKey: process.env.TTS_API_KEY || "",
   ttsVoiceId: process.env.TTS_VOICE_ID || "alloy",
-  ffmpegPath: process.env.FFMPEG_PATH || "ffmpeg",
-  ffprobePath: process.env.FFPROBE_PATH || "ffprobe",
-  publicBaseUrl: process.env.PUBLIC_BASE_URL || "http://localhost:8787",
+  ffmpegPath: process.env.FFMPEG_PATH || ffmpegStatic || "ffmpeg",
+  ffprobePath: process.env.FFPROBE_PATH || ffprobeStatic.path || "ffprobe",
+  publicBaseUrl:
+    process.env.PUBLIC_BASE_URL ||
+    process.env.RENDER_EXTERNAL_URL ||
+    "http://localhost:8787",
   assetsDir: path.join(root, "assets"),
   scriptsDir: path.join(root, "scripts")
   , didApiKey: process.env.DID_API_KEY || ""

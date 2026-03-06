@@ -1,7 +1,16 @@
 node_modules
 dist
+
+# Env files (keep examples committed)
 .env
+.env.*
+!.env.example
 backend/.env
+backend/.env.*
+!backend/.env.example
 frontend/.env
+frontend/.env.*
+!frontend/.env.example
+
 assets/*
 !assets/.gitkeep
