@@ -1,37 +1,3 @@
-import axios from "axios";
-import { config } from "../config.js";
-
-export async function generateDidVideo({ script, outputPath }) {
-  // D-ID API endpoint
-  const endpoint = "https://api.d-id.com/talks";
-  try {
-    const response = await axios.post(
-      endpoint,
-      {
-        script: { type: "text", input: script },
-        config: { /* avatar, voice, etc. can be customized here */ }
-      },
-      {
-        headers: { Authorization: `Bearer ${config.didApiKey}` }
-      }
-    );
-    // The response contains a video URL or ID
-    const videoUrl = response.data.result_url || response.data.url;
-    if (!videoUrl) throw new Error("No video URL returned from D-ID API");
-
-    // Download the video
-    const videoResponse = await axios.get(videoUrl, { responseType: "stream" });
-    const writer = fs.createWriteStream(outputPath);
-    videoResponse.data.pipe(writer);
-    await new Promise((resolve, reject) => {
-      writer.on("finish", resolve);
-      writer.on("error", reject);
-    });
-    return outputPath;
-  } catch (error) {
-    throw new Error(error.response?.data?.error || error.message);
-  }
-}
 import fs from "fs";
 import path from "path";
 import { config } from "../config.js";

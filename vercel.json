@@ -1,0 +1,13 @@
+{
+  "version": 2,
+  "rootDirectory": "ai-ad-studio/frontend",
+  "builds": [
+    {
+      "src": "package.json",
+      "use": "@vercel/vite"
+    }
+  ],
+  "routes": [
+    { "src": "/(.*)", "dest": "/$1" }
+  ]
+}
