@@ -1,6 +1,7 @@
 import { useMemo, useState } from "react";
 
-const API_BASE = "/api";
+const API_BASE_RAW = import.meta.env.VITE_API_BASE_URL || "/api";
+const API_BASE = API_BASE_RAW.endsWith("/") ? API_BASE_RAW.slice(0, -1) : API_BASE_RAW;
 
 const initialForm = {
   brief: "Create a 20 second Instagram ad for a beard growth oil targeting men 20-35",
