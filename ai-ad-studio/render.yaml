@@ -1,0 +1,44 @@
+services:
+  - type: web
+    name: ai-ad-studio-backend
+    env: node
+    rootDir: backend
+    plan: free
+    buildCommand: npm ci
+    startCommand: npm start
+    healthCheckPath: /health
+    autoDeploy: true
+    envVars:
+      - key: NODE_VERSION
+        value: 20
+      - key: GEMINI_API_KEY
+        sync: false
+      - key: TTS_API_KEY
+        sync: false
+      - key: TTS_VOICE_ID
+        value: 21m00Tcm4TlvDq8ikWAM
+      - key: DID_API_KEY
+        sync: false
+      - key: PUBLIC_BASE_URL
+        sync: false
+
+  - type: web
+    name: ai-ad-studio-frontend
+    env: static
+    rootDir: frontend
+    buildCommand: npm ci && npm run build
+    staticPublishPath: dist
+    autoDeploy: true
+    pullRequestPreviewsEnabled: false
+    envVars:
+      - key: NODE_VERSION
+        value: 20
+      - key: VITE_API_BASE_URL
+        fromService:
+          type: web
+          name: ai-ad-studio-backend
+          property: url
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html
