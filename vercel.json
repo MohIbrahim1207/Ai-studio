@@ -1,6 +1,5 @@
 {
   "version": 2,
-  "rootDirectory": "ai-ad-studio/frontend",
   "builds": [
     {
       "src": "package.json",
